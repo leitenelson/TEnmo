@@ -84,27 +84,36 @@ public class App {
         }
     }
 
-	private void viewCurrentBalance() {
+	private void viewCurrentBalance() { //Kendra
+		// TODO Auto-generated method stub
+    //        AuthenticatedUser currentUser = authenticationService.login();
+    //        if(currentUser != null){
+    //            consoleService.printLoginMenu(currentUser);
+            String sqlGetCurrentBalance = "SELECT balance * FROM account WHERE user_id = ?;";
+    //            SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetCurrentBalance);
+    //            if(results.next()){
+    //                Balance balance = ma
+    //        }
+
+	}
+
+	private void viewTransferHistory() { //Kendra
+		// TODO Auto-generated method stub
+
+		
+	}
+
+	private void viewPendingRequests() { //Kendra
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void viewTransferHistory() {
+	private void sendBucks() { //Adien
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void viewPendingRequests() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void sendBucks() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void requestBucks() {
+	private void requestBucks() { //Aiden
 		// TODO Auto-generated method stub
 		
 	}
