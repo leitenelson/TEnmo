@@ -4,6 +4,7 @@ import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
+import com.techelevator.tenmo.services.TransferService;
 
 public class App {
 
@@ -84,38 +85,46 @@ public class App {
         }
     }
 
-	private void viewCurrentBalance() { //Kendra
-		// TODO Auto-generated method stub
-    //        AuthenticatedUser currentUser = authenticationService.login();
-    //        if(currentUser != null){
-    //            consoleService.printLoginMenu(currentUser);
-            String sqlGetCurrentBalance = "SELECT balance * FROM account WHERE user_id = ?;";
-    //            SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetCurrentBalance);
-    //            if(results.next()){
-    //                Balance balance = ma
-    //        }
+    private void viewCurrentBalance() { //Kendra
+        // TODO Auto-generated method stub
+        //        AuthenticatedUser currentUser = authenticationService.login();
+        //        if(currentUser != null){
+        //            consoleService.printLoginMenu(currentUser);
+        //       String sqlGetCurrentBalance = "SELECT balance * FROM account WHERE user_id = ?;";
+        //            SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetCurrentBalance);
+        //            if(results.next()){
+        //                Balance balance = ma
+        //        }
 
-	}
 
-	private void viewTransferHistory() { //Kendra
-		// TODO Auto-generated method stub
+        //  System.out.println(activeService.getUserBalance(currentUser.getUser().getId()));
 
-		
-	}
+    }
+
+    private void viewTransferHistory() { //Kendra
+        // TODO Auto-generated method stub
+        // Map<Long, Transfer> transfer = transferService.getAllTransferByAccountId(currentUser, userAccountId);
+        // consoleService.printTransferHistory(transfers);
+        // long transferId = console.service.promptForInt("Please enter transfer ID to view details (0 to cancel): ");
+        // if (transferId != 0) {
+        // Transfer transfer = transferService.getTransferByTransferId(currentUser, transferId);
+        //consoleService.printTransferDetails(transfer);
+        // }
+    }
 
 	private void viewPendingRequests() { //Kendra
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void sendBucks() { //Adien
-		// TODO Auto-generated method stub
-		
-	}
+    private void sendBucks() {
+        TransferService ts = new TransferService(API_BASE_URL, currentUser);
+        ts.sendBucks();
+    }
 
-	private void requestBucks() { //Aiden
-		// TODO Auto-generated method stub
-		
-	}
+    private void requestBucks() {
+        TransferService ts = new TransferService(API_BASE_URL, currentUser);
+        ts.requestBucks();
+    }
 
 }
