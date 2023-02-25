@@ -24,56 +24,7 @@ public class TransferService {
         BASE_URL = url;
     }
 
-    public Transfer[] transfersList() {
-        Transfer[] output = null;
-        try {
-            output = restTemplate.exchange(BASE_URL + "account/transfers/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthentication(), Transfer[].class).getBody();
-            System.out.println("-------------------------------------------\r\n" +
-                    "Transfers\r\n" +
-                    "ID          From/To                 Amount\r\n" +
-                    "-------------------------------------------\r\n");
-            String fromOrTo = "";
-            String name = "";
-            for (Transfer i : output) {
-                if (currentUser.getUser().getId() == i.getAccountFrom()) {
-                    fromOrTo = "From: ";
-                    name = i.getUserTo();
-                } else {
-                    fromOrTo = "To: ";
-                    name = i.getUserFrom();
-                }
-                System.out.println(i.getTransferId() +"\t\t" + fromOrTo + name + "\t\t$" + i.getAmount());
-            }
-            System.out.print("-------------------------------------------\r\n" +
-                    "Please enter transfer ID to view details (0 to cancel): ");
-            Scanner scanner = new Scanner(System.in);
-            String input = scanner.nextLine();
-            if (Integer.parseInt(input) != 0) {
-                boolean foundTransferId = false;
-                for (Transfer i : output) {
-                    if (Integer.parseInt(input) == i.getTransferId()) {
-                        Transfer temp = restTemplate.exchange(BASE_URL + "transfers/" + i.getTransferId(), HttpMethod.GET, makeAuthentication(), Transfer.class).getBody();
-                        foundTransferId = true;
-                        System.out.println("--------------------------------------------\r\n" +
-                                "Transfer Details\r\n" +
-                                "--------------------------------------------\r\n" +
-                                " Id: "+ temp.getTransferId() + "\r\n" +
-                                " From: " + temp.getUserFrom() + "\r\n" +
-                                " To: " + temp.getUserTo() + "\r\n" +
-                                " Type: " + temp.getTransferType() + "\r\n" +
-                                " Status: " + temp.getTransferStatus() + "\r\n" +
-                                " Amount: $" + temp.getAmount());
-                    }
-                }
-                if (!foundTransferId) {
-                    System.out.println("Not a valid transfer ID");
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Something went wrong... Opps! We have all your money now!");
-        }
-        return output;
-    }
+    
 
     public void sendBucks() {
         User[] users = null;
@@ -143,67 +94,7 @@ public class TransferService {
         }
     }
 
-    public Transfer[] transfersRequestList() {
-        Transfer[] output = null;
-        String results;
-        try {
-            output = restTemplate.exchange(BASE_URL + "request/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthentication(), Transfer[].class).getBody();
-            System.out.println("-------------------------------------------\r\n" +
-                    "Pending Transfers\r\n" +
-                    "ID          From/To                 Amount\r\n" +
-                    "-------------------------------------------\r\n");
-            String fromOrTo = "";
-            String name = "";
-            for (Transfer i : output) {
-                if (currentUser.getUser().getId() == i.getAccountFrom()) {
-                    fromOrTo = "From: ";
-                    name = i.getUserTo();
-                } else {
-                    fromOrTo = "To: ";
-                    name = i.getUserFrom();
-                }
-                System.out.println(i.getTransferId() +"\t\t" + fromOrTo + name + "\t\t$" + i.getAmount());
-            }
-            System.out.print("-------------------------------------------\r\n" +
-                    "Please enter transfer ID to approve/reject (0 to cancel): ");
-            Scanner scanner = new Scanner(System.in);
-            String input = scanner.nextLine();
-            if (Integer.parseInt(input) != 0) {
-                boolean foundTransferId = false;
-                for (Transfer i : output) {
-                    if (i.getAccountTo() != currentUser.getUser().getId()) {
-                        if (Integer.parseInt(input) == i.getTransferId()) {
-                            System.out.print("-------------------------------------------\r\n" +
-                                    i.getTransferId() +"\t\t" + fromOrTo + name + "\t\t$" + i.getAmount() + "\r\n" +
-                                    "1: Approve\r\n" +
-                                    "2: Reject\r\n" +
-                                    "0: Don't approve or reject\r\n" +
-                                    "--------------------------\r\n" +
-                                    "Please choose an option: ");
-                            try {
-                                int id = 1 + Integer.parseInt(scanner.nextLine());
-                                if (id != 1) {
-                                    results = restTemplate.exchange(BASE_URL + "transfer/status/" + id, HttpMethod.PUT, makeTransfer(i), String.class).getBody();
-                                    System.out.println(results);
-                                    foundTransferId = true;
-                                }
-                            } catch (NumberFormatException e) {
-                                System.out.println("Not a valid transfer option");
-                            }
-                            if (!foundTransferId) {
-                                System.out.println("Not a valid transfer ID");
-                            }
-                        }
-                    } else {
-                        System.out.println("You can not approve/reject your own request.");
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Something went wrong... Opps! We have all your money now!");
-        }
-        return output;
-    }
+
 
     public User[] getUsers() {
         User[] user = null;

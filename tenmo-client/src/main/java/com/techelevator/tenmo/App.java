@@ -87,14 +87,14 @@ public class App {
 
     private void viewCurrentBalance() { //Kendra
         // TODO Auto-generated method stub
-        //        AuthenticatedUser currentUser = authenticationService.login();
-        //        if(currentUser != null){
-        //            consoleService.printLoginMenu(currentUser);
-        //       String sqlGetCurrentBalance = "SELECT balance * FROM account WHERE user_id = ?;";
-        //            SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetCurrentBalance);
-        //            if(results.next()){
-        //                Balance balance = ma
-        //        }
+                AuthenticatedUser currentUser = authenticationService.login();
+                if(currentUser != null){
+                    consoleService.printLoginMenu(currentUser);
+               String sqlGetCurrentBalance = "SELECT balance * FROM account WHERE user_id = ?;";
+                    SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetCurrentBalance);
+                    if(results.next()){
+                        Balance balance = ma
+                }
 
 
         //  System.out.println(activeService.getUserBalance(currentUser.getUser().getId()));
@@ -103,13 +103,13 @@ public class App {
 
     private void viewTransferHistory() { //Kendra
         // TODO Auto-generated method stub
-        // Map<Long, Transfer> transfer = transferService.getAllTransferByAccountId(currentUser, userAccountId);
-        // consoleService.printTransferHistory(transfers);
-        // long transferId = console.service.promptForInt("Please enter transfer ID to view details (0 to cancel): ");
-        // if (transferId != 0) {
-        // Transfer transfer = transferService.getTransferByTransferId(currentUser, transferId);
-        //consoleService.printTransferDetails(transfer);
-        // }
+         Map<Long, Transfer> transfer = transferService.getAllTransferByAccountId(currentUser, userAccountId);
+         consoleService.printTransferHistory(transfers);
+         long transferId = console.service.promptForInt("Please enter transfer ID to view details (0 to cancel): ");
+         if (transferId != 0) {
+         Transfer transfer = transferService.getTransferByTransferId(currentUser, transferId);
+        consoleService.printTransferDetails(transfer);
+         }
     }
 
 	private void viewPendingRequests() { //Kendra
