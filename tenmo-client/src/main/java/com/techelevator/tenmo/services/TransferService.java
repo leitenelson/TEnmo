@@ -24,7 +24,6 @@ public class TransferService {
         BASE_URL = url;
     }
 
-    
 
     public void sendBucks() {
         User[] users = null;
@@ -56,7 +55,7 @@ public class TransferService {
                 System.out.println(output);
             }
         } catch (Exception e) {
-            System.out.println("Bad input.");
+            System.out.println("Input Error");
         }
     }
 
@@ -90,24 +89,10 @@ public class TransferService {
                 System.out.println(output);
             }
         } catch (Exception e) {
-            System.out.println("Bad input.");
+            System.out.println("Input Error");
         }
     }
 
-
-
-    public User[] getUsers() {
-        User[] user = null;
-        try {
-            user = restTemplate.exchange(BASE_URL + "listusers", HttpMethod.GET, makeAuthentication(), User[].class).getBody();
-            for (User i : user) {
-                System.out.println(i);
-            }
-        } catch (RestClientResponseException e) {
-            System.out.println("Error getting users");
-        }
-        return user;
-    }
 
     private HttpEntity<Transfer> makeTransfer(Transfer transfer) {
         HttpHeaders headers = new HttpHeaders();
