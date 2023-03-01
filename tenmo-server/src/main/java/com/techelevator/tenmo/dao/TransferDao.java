@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TransferDao {
     public List<Transfer> getAllTransfers(int id);
-    public Transfer getTransferById(int transactionId);
+    public Transfer getTransferById(int Id);
     public String sendTransfer(int accountFrom, int accountTo, BigDecimal amount);
     public String requestTransfer(int accountFrom, int accountTo, BigDecimal amount);
     public List<Transfer> getPendingRequests(int id);

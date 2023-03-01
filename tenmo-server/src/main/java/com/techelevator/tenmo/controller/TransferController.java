@@ -3,6 +3,7 @@ package com.techelevator.tenmo.controller;
 import com.techelevator.tenmo.dao.TransferDao;
 import com.techelevator.tenmo.model.Transfer;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -10,7 +11,6 @@ import java.util.List;
 
 //get the information
 @RestController
-@RequestMapping("/transfers")
 public class TransferController {
 
     private TransferDao dao;
@@ -20,7 +20,7 @@ public class TransferController {
     }
 
     //List of transfers
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/account/transfer/{id}", method = RequestMethod.GET)
     public List<Transfer> listAll(@PathVariable int transactionId){
         if(transactionId > 0){
             return dao.getAllTransfers(transactionId);
@@ -28,7 +28,7 @@ public class TransferController {
         return null;
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/transfer/{id}", method = RequestMethod.GET)
     public Transfer listOne(@PathVariable int id) { //when you write it sends it to the sql
         Transfer transfer = dao.getTransferById(id);
         if (transfer == null) {
@@ -39,18 +39,19 @@ public class TransferController {
     }
 
     //sendTransfer --- just sending
-    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "/transfer", method = RequestMethod.POST)
     public String send(@RequestBody Transfer transfer) {
         return dao.sendTransfer(transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getAmount());
     }
 
     //requestTransfer --- user request a transfer from someone
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(path="/request"  ,    method = RequestMethod.POST)
     public String request(@RequestBody Transfer transfer) {
         return dao.requestTransfer(transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getAmount());
     }
     //getPendingRequests
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/request/{id}", method = RequestMethod.GET)
     public List<Transfer> getRequest(@PathVariable int id){
         List<Transfer> listTransfer = dao.getPendingRequests(id);
         if(listTransfer == null){
@@ -62,7 +63,7 @@ public class TransferController {
     }
 
     //updateTransferRequest "put"
-    @RequestMapping( path = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/transfer/status/{id}", method = RequestMethod.PUT)
     public String update(@RequestBody Transfer transfer, @PathVariable int id){
         String updatedTransfer = dao.updateTransferRequest(transfer, id);
         if(updatedTransfer == null){

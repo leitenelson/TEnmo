@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.security.auth.login.AccountNotFoundException;
+import java.math.BigDecimal;
+
 @Component
 public class JdbcAccountDao implements AccountDao{
 
@@ -38,6 +40,50 @@ public class JdbcAccountDao implements AccountDao{
             throw new UsernameNotFoundException("UserId " + userId + " was not found.");
         }
         return accountId;
+    }
+
+    @Override
+    public BigDecimal addToBalance(BigDecimal addAmount, int id) {
+        Account account = findAccountByUserId(id);
+        BigDecimal newBalance = account.getBalance().add(addAmount);
+        System.out.println(newBalance);
+        String sqlString = "UPDATE accounts SET balance = ? WHERE user_id = ?";
+        try {
+            jdbcTemplate.update(sqlString, newBalance, id);
+        } catch (Exception e) {
+            System.out.println("Error accessing data");
+        }
+        return account.getBalance();
+    }
+
+    @Override
+    public BigDecimal subtractFromBalance(BigDecimal subtractAmount, int id) {
+        Account account = findAccountByUserId(id);
+        BigDecimal newBalance = account.getBalance().subtract(subtractAmount);
+        System.out.println(newBalance);
+        String sqlString = "UPDATE accounts SET balance = ? WHERE user_id = ?";
+        try {
+            jdbcTemplate.update(sqlString, newBalance, id);
+        } catch (Exception e) {
+            System.out.println("Error accessing data");
+        }
+        return account.getBalance();
+    }
+
+    @Override
+    public BigDecimal getBalance(int id) {
+            String sqlString = "SELECT balance FROM accounts WHERE user_id = ?";
+            SqlRowSet results = null;
+            BigDecimal balance = null;
+            try {
+                results = jdbcTemplate.queryForRowSet(sqlString, id);
+                if (results.next()) {
+                    balance = results.getBigDecimal("balance");
+                }
+            } catch (Exception e) {
+                System.out.println("Error accessing data");
+            }
+            return balance;
     }
 
     private Account mapRowToAccount(SqlRowSet rs) {
