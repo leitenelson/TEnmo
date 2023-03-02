@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
 @RestController
-@PreAuthorize("isAuthenticated")
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("users")
 public class UserController {
 

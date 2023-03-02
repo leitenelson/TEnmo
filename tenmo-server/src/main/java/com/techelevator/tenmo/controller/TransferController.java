@@ -12,6 +12,7 @@ import java.util.List;
 //get the information
 @RestController
 @RequestMapping("transfer")
+@PreAuthorize("isAuthenticated()")
 public class TransferController {
 
     private TransferDao dao;
