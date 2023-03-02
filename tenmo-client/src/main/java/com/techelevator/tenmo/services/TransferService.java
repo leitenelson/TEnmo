@@ -28,9 +28,9 @@ public class TransferService {
     public void sendBucks() {
         User[] users = null;
         Transfer transfer = new Transfer();
+        Scanner scanner = new Scanner(System.in);
         try {
-            Scanner scanner = new Scanner(System.in);
-            users = restTemplate.exchange(BASE_URL + "listusers", HttpMethod.GET, makeAuthentication(), User[].class).getBody();
+            users = restTemplate.exchange(BASE_URL + "users", HttpMethod.GET, makeAuthentication(), User[].class).getBody();
             System.out.println("-------------------------------------------\r\n" +
                     "Users\r\n" +
                     "ID\t\tName\r\n" +
@@ -42,6 +42,7 @@ public class TransferService {
             }
             System.out.print("-------------------------------------------\r\n" +
                     "Enter ID of user you are sending to (0 to cancel): ");
+
             transfer.setAccountTo(Integer.parseInt(scanner.nextLine()));
             transfer.setAccountFrom(currentUser.getUser().getId());
             if (transfer.getAccountTo() != 0) {

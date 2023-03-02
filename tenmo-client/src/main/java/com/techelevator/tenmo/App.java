@@ -2,6 +2,7 @@ package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.UserCredentials;
+import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
 import com.techelevator.tenmo.services.TransferService;
@@ -87,17 +88,8 @@ public class App {
 
     private void viewCurrentBalance() { //Kendra
         // TODO Auto-generated method stub
-               // AuthenticatedUser currentUser = authenticationService.login();
-//                if(currentUser != null){
-//                    consoleService.printLoginMenu(currentUser);
-//               String sqlGetCurrentBalance = "SELECT balance * FROM account WHERE user_id = ?;";
-//                    SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetCurrentBalance);
-//                    if(results.next()){
-//                        Balance balance = ma
-//                }
-
-
-        //  System.out.println(activeService.getUserBalance(currentUser.getUser().getId()));
+        AccountService accountService = new AccountService(API_BASE_URL,currentUser);
+        accountService.getBalance();
 
     }
 

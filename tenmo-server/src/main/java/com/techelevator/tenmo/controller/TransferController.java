@@ -11,6 +11,7 @@ import java.util.List;
 
 //get the information
 @RestController
+@RequestMapping("transfer")
 public class TransferController {
 
     private TransferDao dao;
@@ -20,7 +21,7 @@ public class TransferController {
     }
 
     //List of transfers
-    @RequestMapping(value = "/account/transfer/{id}", method = RequestMethod.GET)
+    @GetMapping("{id}")
     public List<Transfer> listAll(@PathVariable int transactionId){
         if(transactionId > 0){
             return dao.getAllTransfers(transactionId);
@@ -28,7 +29,7 @@ public class TransferController {
         return null;
     }
 
-    @RequestMapping(path = "/transfer/{id}", method = RequestMethod.GET)
+    @GetMapping("{id}")
     public Transfer listOne(@PathVariable int id) { //when you write it sends it to the sql
         Transfer transfer = dao.getTransferById(id);
         if (transfer == null) {
@@ -40,18 +41,18 @@ public class TransferController {
 
     //sendTransfer --- just sending
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/transfer", method = RequestMethod.POST)
+    @PostMapping
     public String send(@RequestBody Transfer transfer) {
         return dao.sendTransfer(transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getAmount());
     }
 
     //requestTransfer --- user request a transfer from someone
-    @RequestMapping(path="/request"  ,    method = RequestMethod.POST)
+    @PostMapping("/request")
     public String request(@RequestBody Transfer transfer) {
         return dao.requestTransfer(transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getAmount());
     }
     //getPendingRequests
-    @RequestMapping(path = "/request/{id}", method = RequestMethod.GET)
+    @GetMapping("/request/{id}")
     public List<Transfer> getRequest(@PathVariable int id){
         List<Transfer> listTransfer = dao.getPendingRequests(id);
         if(listTransfer == null){

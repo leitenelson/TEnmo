@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("account")
 @PreAuthorize("isAuthenticated()")
 public class AccountController {
 
@@ -28,6 +28,7 @@ public class AccountController {
 
     @GetMapping (path = "/balance")
     public BigDecimal getBalance(Principal principal) {
+
         User user = userdao.findByUsername(principal.getName());
         Account account = accountdao.findAccountByUserId(user.getId());
         return account.getBalance();
