@@ -21,7 +21,7 @@ public class TransferController {
     }
 
     //List of transfers
-    @GetMapping("{id}")
+    @GetMapping("/{userId}")
     public List<Transfer> listAll(@PathVariable int transactionId){
         if(transactionId > 0){
             return dao.getAllTransfers(transactionId);
@@ -29,7 +29,7 @@ public class TransferController {
         return null;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Transfer listOne(@PathVariable int id) { //when you write it sends it to the sql
         Transfer transfer = dao.getTransferById(id);
         if (transfer == null) {
@@ -64,7 +64,7 @@ public class TransferController {
     }
 
     //updateTransferRequest "put"
-    @RequestMapping(path = "/transfer/status/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/status/{id}", method = RequestMethod.PUT)
     public String update(@RequestBody Transfer transfer, @PathVariable int id){
         String updatedTransfer = dao.updateTransferRequest(transfer, id);
         if(updatedTransfer == null){
