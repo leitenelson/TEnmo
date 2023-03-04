@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 public class TransferService {
@@ -26,8 +27,8 @@ public class TransferService {
 
 
     public void sendBucks() {
-        Scanner scanner = new Scanner(System.in);
         User[] users = null;
+        Scanner scanner = new Scanner(System.in);
         try {
             users = restTemplate.exchange(BASE_URL + "users", HttpMethod.GET, makeAuthentication(), User[].class).getBody();
             printUsers(users);
@@ -43,9 +44,9 @@ public class TransferService {
     }
 
     public void requestBucks() {
-        Scanner scanner = new Scanner(System.in);
         User[] users = null;
         try {
+            Scanner scanner = new Scanner(System.in);
             users = restTemplate.exchange(BASE_URL + "listusers", HttpMethod.GET, makeAuthentication(), User[].class).getBody();
             printUsers(users);
             transfer.setAccountTo(currentUser.getUser().getId());
@@ -85,6 +86,31 @@ public class TransferService {
         }
     }
 
+    public List<Transfer> transferHistory (int userId) {
+        List<Transfer> transfer = null;
+        try {
+            // Add code here to send the request to the API and get the auction from the response.
+            ResponseEntity<Transfer> response = restTemplate.exchange(BASE_URL + userId,
+                    HttpMethod.GET, makeAuthentication(), Transfer.class);
+            transfer = response.getBody();
+        } catch (RestClientResponseException | ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return transfer;
+    }
+
+    public List<Transfer> pendingRequest (int requestId) {
+        List<Transfer> request = null;
+        try {
+            // Add code here to send the request to the API and get the auction from the response.
+            ResponseEntity<Transfer> response = restTemplate.exchange(BASE_URL + requestId,
+                    HttpMethod.GET, makeAuthentication(), Transfer.class);
+            request = response.getBody();
+        } catch (RestClientResponseException | ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return request;
+    }
 
 
     private HttpEntity<Transfer> makeTransfer(Transfer transfer) {
@@ -101,5 +127,4 @@ public class TransferService {
         HttpEntity entity = new HttpEntity<>(headers);
         return entity;
     }
-
 }

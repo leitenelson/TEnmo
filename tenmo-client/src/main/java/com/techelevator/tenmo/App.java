@@ -94,18 +94,13 @@ public class App {
     }
 
     private void viewTransferHistory() { //Kendra
-        // TODO Auto-generated method stub
-//         Map<Long, Transfer> transfer = transferService.getAllTransferByAccountId(currentUser, userAccountId);
-//         consoleService.printTransferHistory(transfers);
-//         long transferId = console.service.promptForInt("Please enter transfer ID to view details (0 to cancel): ");
-//         if (transferId != 0) {
-//         Transfer transfer = transferService.getTransferByTransferId(currentUser, transferId);
-//        consoleService.printTransferDetails(transfer);
-//         }
-    }
+        TransferService transferService = new TransferService(API_BASE_URL,currentUser);
+        transferService.transferHistory();
+        }
 
 	private void viewPendingRequests() { //Kendra
-		// TODO Auto-generated method stub
+        TransferService transferService = new TransferService(API_BASE_URL,currentUser);
+        transferService.pendingRequest();
 		
 	}
 
