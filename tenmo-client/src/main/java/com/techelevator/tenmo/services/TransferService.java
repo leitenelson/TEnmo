@@ -3,14 +3,14 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import com.techelevator.util.BasicLogger;
+import org.springframework.http.*;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 public class TransferService {
@@ -92,6 +92,32 @@ public class TransferService {
         } catch (Exception e) {
             System.out.println("Input Error");
         }
+    }
+
+    public List<Transfer> transferHistory (int userId) {
+        List<Transfer> transfer = null;
+        try {
+            // Add code here to send the request to the API and get the auction from the response.
+            ResponseEntity<Transfer> response = restTemplate.exchange(BASE_URL + userId,
+                    HttpMethod.GET, makeAuthentication(), Transfer.class);
+            transfer = response.getBody();
+        } catch (RestClientResponseException | ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return transfer;
+    }
+
+    public List<Transfer> pendingRequest (int requestId) {
+        List<Transfer> request = null;
+        try {
+            // Add code here to send the request to the API and get the auction from the response.
+            ResponseEntity<Transfer> response = restTemplate.exchange(BASE_URL + requestId,
+                    HttpMethod.GET, makeAuthentication(), Transfer.class);
+            request = response.getBody();
+        } catch (RestClientResponseException | ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return request;
     }
 
 
