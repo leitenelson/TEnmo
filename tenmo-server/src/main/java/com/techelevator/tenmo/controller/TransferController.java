@@ -1,12 +1,17 @@
 package com.techelevator.tenmo.controller;
 
+import com.techelevator.tenmo.dao.AccountDao;
 import com.techelevator.tenmo.dao.TransferDao;
+import com.techelevator.tenmo.dao.UserDao;
+import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
+import com.techelevator.tenmo.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.util.List;
 
 //get the information
@@ -16,9 +21,13 @@ import java.util.List;
 public class TransferController {
 
     private TransferDao dao;
+    private UserDao userDao;
+    private AccountDao account;
 
-    public TransferController(TransferDao dao) {
+    public TransferController(TransferDao dao, UserDao userDao, AccountDao account) {
         this.dao = dao;
+        this.userDao = userDao;
+        this.account = account;
     }
 
     //List of transfers
@@ -42,8 +51,9 @@ public class TransferController {
 
     //sendTransfer --- just sending
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping(path = "/send")
     public String send(@RequestBody Transfer transfer) {
+
         return dao.sendTransfer(transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getAmount());
     }
 

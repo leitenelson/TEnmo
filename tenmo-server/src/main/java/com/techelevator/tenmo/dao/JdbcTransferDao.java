@@ -2,6 +2,7 @@ package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.AllExceptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,9 @@ import java.math.BigDecimal;
 @Component
 public class JdbcTransferDao implements TransferDao {
     private JdbcTemplate jdbcTemplate;
+    @Autowired
     private AccountDao accountDao;
+    private UserDao userDao;
     public JdbcTransferDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -64,21 +67,25 @@ public class JdbcTransferDao implements TransferDao {
     }
 
     @Override
-    public String sendTransfer(int idFrom, int idTo, BigDecimal amount) {
-        if ( idFrom == idTo) {
+    public String sendTransfer(int userFrom, int userTo, BigDecimal amount) {
+        if ( userFrom == userTo) {
             return "You are not allowed to send money to yourself";
         }
 
-        if (amount.compareTo(accountDao.getBalance(idFrom)) == -1 && amount.compareTo(new BigDecimal(0)) == 1) {
-            String sql = "INSERT INTO transfer(transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
-                         "VALUES (2, 2, ?, ?, ?)";
+        int idFrom = accountDao.findAccountIdByUserId(userFrom);
+        int idTo = accountDao.findAccountIdByUserId(userTo);
+
+        if (amount.compareTo(accountDao.getBalance(userFrom)) == -1 && amount.compareTo(new BigDecimal(0)) == 1) {
+            String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
+                    "VALUES (2, 2, ?, ?, ?)";
             jdbcTemplate.update(sql, idFrom, idTo, amount);
-            accountDao.addToBalance(amount, idTo);
-            accountDao.subtractFromBalance(amount, idFrom);
+            accountDao.addToBalance(amount, userTo);
+            accountDao.subtractFromBalance(amount, userFrom);
             return "Transfer complete";
         } else {
-            return "Transfer did not go through";
+            return "Transfer failed due to a lack of funds or amount was less then or equal to 0 or not a valid user";
         }
+
 
 
     }
@@ -91,7 +98,7 @@ public class JdbcTransferDao implements TransferDao {
 
         if ( amount.compareTo(new BigDecimal(0)) == 1) {
             String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
-                          "VALUES (1, 1, ?, ?, ?)";
+                          "VALUES (1, 1, ?, ?, ?) returning transfer_id; ";
             jdbcTemplate.update(sql, idFrom, idTo, amount);
             return "Your request was sent";
         } else {
@@ -109,7 +116,7 @@ public class JdbcTransferDao implements TransferDao {
         return null;
     }
 
-    public Transfer mapRowToTransfer(SqlRowSet results) {
+    private Transfer mapRowToTransfer(SqlRowSet results) {
         Transfer transfer = new Transfer();
         transfer.setTransferId(results.getInt("transfer_id"));
         transfer.setTransferTypeId(results.getInt("transfer_type_id"));
@@ -117,6 +124,14 @@ public class JdbcTransferDao implements TransferDao {
         transfer.setAccountFrom(results.getInt("account_From"));
         transfer.setAccountTo(results.getInt("account_to"));
         transfer.setAmount(results.getBigDecimal("amount"));
+        try {
+            transfer.setUserFrom(results.getString("userFrom"));
+            transfer.setUserTo(results.getString("userTo"));
+        } catch (Exception e) {}
+        try {
+            transfer.setTransferType(results.getString("transfer_type_desc"));
+            transfer.setTransferStatus(results.getString("transfer_status_desc"));
+        } catch (Exception e) {}
         return transfer;
     }
 }

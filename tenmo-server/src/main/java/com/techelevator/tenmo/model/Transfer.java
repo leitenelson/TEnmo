@@ -9,20 +9,57 @@ public class Transfer {
     private int accountFrom;
     private int accountTo;
     private BigDecimal amount;
-
+    private String transferType;
+    private String transferStatus;
+    private String userFrom;
+    private String userTo;
 
     public Transfer() {
     }
 
-    public Transfer( int transferTypeId, int transferStatusId, int accountFrom, int accountTo, BigDecimal amount) {
-
-        this.transferTypeId = transferTypeId;
-        this.transferStatusId = transferStatusId;
+    public Transfer(int accountFrom, int accountTo, BigDecimal amount) {
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
         this.amount = amount;
     }
 
+    public Transfer(int transferId, int transferTypeId, int transferStatusId, int accountFrom, int accountTo, BigDecimal amount, String transferType, String transferStatus, String userFrom, String userTo) {
+        this.transferId = transferId;
+        this.transferTypeId = transferTypeId;
+        this.transferStatusId = transferStatusId;
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
+        this.amount = amount;
+        this.transferType = transferType;
+        this.transferStatus = transferStatus;
+        this.userFrom = userFrom;
+        this.userTo = userTo;
+    }
+
+    public String getUserFrom() {
+        return userFrom;
+    }
+    public void setUserFrom(String userFrom) {
+        this.userFrom = userFrom;
+    }
+    public String getUserTo() {
+        return userTo;
+    }
+    public void setUserTo(String userTo) {
+        this.userTo = userTo;
+    }
+    public String getTransferType() {
+        return transferType;
+    }
+    public void setTransferType(String transferType) {
+        this.transferType = transferType;
+    }
+    public String getTransferStatus() {
+        return transferStatus;
+    }
+    public void setTransferStatus(String transferStatus) {
+        this.transferStatus = transferStatus;
+    }
     public int getTransferId() {
         return transferId;
     }
@@ -32,8 +69,8 @@ public class Transfer {
     public int getTransferTypeId() {
         return transferTypeId;
     }
-    public void setTransferTypeId(int transferTypeId) {
-        this.transferTypeId = transferTypeId;
+    public void setTransferTypeId(int transferTyepId) {
+        this.transferTypeId = transferTyepId;
     }
     public int getTransferStatusId() {
         return transferStatusId;

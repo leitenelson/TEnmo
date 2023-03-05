@@ -94,13 +94,13 @@ public class App {
     }
 
     private void viewTransferHistory() { //Kendra
-        TransferService transferService = new TransferService(API_BASE_URL,currentUser);
-        transferService.transferHistory();
+//        TransferService transferService = new TransferService(API_BASE_URL,currentUser);
+//        transferService.transferHistory();
         }
 
 	private void viewPendingRequests() { //Kendra
-        TransferService transferService = new TransferService(API_BASE_URL,currentUser);
-        transferService.pendingRequest();
+//        TransferService transferService = new TransferService(API_BASE_URL,currentUser);
+//        transferService.pendingRequest();
 		
 	}
 
