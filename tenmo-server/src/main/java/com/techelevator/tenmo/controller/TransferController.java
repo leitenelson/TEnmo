@@ -32,14 +32,14 @@ public class TransferController {
 
     //List of transfers
     @GetMapping("/{userId}")
-    public List<Transfer> listAll(@PathVariable int transactionId){
-        if(transactionId > 0){
-            return dao.getAllTransfers(transactionId);
+    public List<Transfer> listAll(@PathVariable int userID){
+        if(userID > 0){
+            return dao.getAllTransfers(userID);
         }
         return null;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping
     public Transfer listOne(@PathVariable int id) { //when you write it sends it to the sql
         Transfer transfer = dao.getTransferById(id);
         if (transfer == null) {

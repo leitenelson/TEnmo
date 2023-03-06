@@ -72,7 +72,7 @@ public class App {
             } else if (menuSelection == 2) {
                 viewTransferHistory();
             } else if (menuSelection == 3) {
-                viewPendingRequests();
+     //           viewPendingRequests();
             } else if (menuSelection == 4) {
                 sendBucks();
             } else if (menuSelection == 5) {
@@ -94,15 +94,15 @@ public class App {
     }
 
     private void viewTransferHistory() { //Kendra
-//        TransferService transferService = new TransferService(API_BASE_URL,currentUser);
-//        transferService.transferHistory();
+        TransferService transferService = new TransferService(API_BASE_URL,currentUser);
+        transferService.transferHistory();
         }
 
-	private void viewPendingRequests() { //Kendra
+//	private void viewPendingRequests() { //Kendra
 //        TransferService transferService = new TransferService(API_BASE_URL,currentUser);
 //        transferService.pendingRequest();
 		
-	}
+//	}
 
     private void sendBucks() {
         TransferService ts = new TransferService(API_BASE_URL, currentUser);

@@ -3,10 +3,10 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import com.techelevator.util.BasicLogger;
+import org.springframework.http.*;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -59,7 +59,24 @@ public class TransferService {
             System.out.println("Input Error");
         }
     }
-
+    private void printTransfers(Transfer[] transfers){
+        System.out.println("-------------------------------------------\r\n" +
+                "Transfers\r\n" +
+                "ID          From/To                 Amount\r\n" +
+                "-------------------------------------------\r\n");
+        String fromTo = "";
+        String userName = "";
+        for (Transfer i : transfers) {
+            if (currentUser.getUser().getId() == i.getAccountFrom()){
+                 fromTo = "From: ";
+                 userName = i.getUserTo();
+            } else {
+                 fromTo = "To: ";
+                 userName = i.getUserFrom();
+            }
+            System.out.println(i.getTransferId() + "\t\t" + fromTo + userName + "\t\t$" + i.getAmount());
+        }
+    }
     private void printUsers(User[] users) {
         System.out.println("-------------------------------------------\r\n" +
                 "Users\r\n" +
@@ -86,19 +103,21 @@ public class TransferService {
         }
     }
 
-//    public List<Transfer> transferHistory (int userId) {
-//        List<Transfer> transfer = null;
-//        try {
-//            // Add code here to send the request to the API and get the auction from the response.
-//            ResponseEntity<Transfer> response = restTemplate.exchange(BASE_URL + userId,
-//                    HttpMethod.GET, makeAuthentication(), Transfer.class);
-//            transfer = response.getBody();
-//        } catch (RestClientResponseException | ResourceAccessException e) {
-//            BasicLogger.log(e.getMessage());
-//        }
-//        return transfer;
-//    }
-//
+    public void transferHistory () {
+        Transfer[] transfer = null;
+
+        try {
+            // Add code here to send the request to the API and get the auction from the response.
+             transfer = restTemplate.exchange(BASE_URL + "transfer/" + currentUser.getUser().getId(),
+                    HttpMethod.GET, makeAuthentication(), Transfer[].class).getBody();
+            printTransfers(transfer);
+        } catch (RestClientResponseException | ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
+
+    }
+
+
 //    public List<Transfer> pendingRequest (int requestId) {
 //        List<Transfer> request = null;
 //        try {
