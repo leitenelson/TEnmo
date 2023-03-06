@@ -39,7 +39,7 @@ public class UserController {
     }
 
     //endpoint is /users/account?id="
-    @GetMapping("/account")
+    @GetMapping("/account/{id}")
     public User findUserByAccountId(@PathVariable int id) {
         return userDao.findUserByAccountId(id);
     }

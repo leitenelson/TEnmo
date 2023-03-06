@@ -17,24 +17,24 @@ public class Transfer {
     public Transfer() {
     }
 
-    public Transfer(int accountFrom, int accountTo, BigDecimal amount) {
-        this.accountFrom = accountFrom;
-        this.accountTo = accountTo;
-        this.amount = amount;
-    }
+//    public Transfer(int accountFrom, int accountTo, BigDecimal amount) {
+//        this.accountFrom = accountFrom;
+//        this.accountTo = accountTo;
+//        this.amount = amount;
+//    }
 
-    public Transfer(int transferId, int transferTypeId, int transferStatusId, int accountFrom, int accountTo, BigDecimal amount, String transferType, String transferStatus, String userFrom, String userTo) {
-        this.transferId = transferId;
-        this.transferTypeId = transferTypeId;
-        this.transferStatusId = transferStatusId;
-        this.accountFrom = accountFrom;
-        this.accountTo = accountTo;
-        this.amount = amount;
-        this.transferType = transferType;
-        this.transferStatus = transferStatus;
-        this.userFrom = userFrom;
-        this.userTo = userTo;
-    }
+//    public Transfer(int transferId, int transferTypeId, int transferStatusId, int accountFrom, int accountTo, BigDecimal amount, String transferType, String transferStatus, String userFrom, String userTo) {
+//        this.transferId = transferId;
+//        this.transferTypeId = transferTypeId;
+//        this.transferStatusId = transferStatusId;
+//        this.accountFrom = accountFrom;
+//        this.accountTo = accountTo;
+//        this.amount = amount;
+//        this.transferType = transferType;
+//        this.transferStatus = transferStatus;
+//        this.userFrom = userFrom;
+//        this.userTo = userTo;
+//    }
 
     public String getUserFrom() {
         return userFrom;

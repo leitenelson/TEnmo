@@ -1,5 +1,6 @@
 package com.techelevator.tenmo.services;
 
+import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
@@ -19,6 +20,7 @@ public class TransferService {
     private RestTemplate restTemplate = new RestTemplate();
     private AuthenticatedUser currentUser;
     private Transfer transfer = new Transfer();
+   private Account account = new Account();
 
     public TransferService(String url, AuthenticatedUser currentUser) {
         this.currentUser = currentUser;
@@ -66,16 +68,22 @@ public class TransferService {
                 "-------------------------------------------\r\n");
         String fromTo = "";
         String userName = "";
+
         for (Transfer i : transfers) {
-            if (currentUser.getUser().getId() == i.getAccountFrom()){
-                 fromTo = "From: ";
-                 userName = i.getUserTo();
+
+            if (currentUser.getUser().getId()== account.getUserId()) {
+                fromTo = "From: " ;
+                userName = i.getUserTo();
+
+
             } else {
-                 fromTo = "To: ";
-                 userName = i.getUserFrom();
+                fromTo = "To: ";
+                userName = i.getUserFrom();
             }
-            System.out.println(i.getTransferId() + "\t\t" + fromTo + userName + "\t\t$" + i.getAmount());
+            System.out.println(i.getTransferId() +"\t\t" + fromTo + userName + "\t\t$" + i.getAmount());
+
         }
+
     }
     private void printUsers(User[] users) {
         System.out.println("-------------------------------------------\r\n" +

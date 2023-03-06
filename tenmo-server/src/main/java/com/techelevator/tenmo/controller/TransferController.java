@@ -31,10 +31,10 @@ public class TransferController {
     }
 
     //List of transfers
-    @GetMapping("/{userId}")
-    public List<Transfer> listAll(@PathVariable int userID){
-        if(userID > 0){
-            return dao.getAllTransfers(userID);
+    @GetMapping(path="/{userId}")
+    public List<Transfer> listAll(@PathVariable("userId") int transactionId){
+        if(transactionId > 0){
+            return dao.getAllTransfers(transactionId);
         }
         return null;
     }

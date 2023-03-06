@@ -26,10 +26,7 @@ public class JdbcTransferDao implements TransferDao {
     @Override
     public List<Transfer> getAllTransfers(int id) {
         List<Transfer> list = new ArrayList<>();
-        String sql = "SELECT t.*, " +
-                "u.username AS userFrom, " +
-                "v.username AS userTo " +
-                "FROM transfer t " +
+        String sql = "SELECT t.*, u.username AS userFrom, v.username AS userTo FROM transfer t " +
                 "JOIN account a ON t.account_from = a.account_id " +
                 "JOIN account b ON t.account_to = b.account_id " +
                 "JOIN tenmo_user u ON a.user_id = u.user_id " +
@@ -122,7 +119,7 @@ public class JdbcTransferDao implements TransferDao {
         transfer.setTransferId(results.getInt("transfer_id"));
         transfer.setTransferTypeId(results.getInt("transfer_type_id"));
         transfer.setTransferStatusId(results.getInt("transfer_status_id"));
-        transfer.setAccountFrom(results.getInt("account_From"));
+        transfer.setAccountFrom(results.getInt("account_from"));
         transfer.setAccountTo(results.getInt("account_to"));
         transfer.setAmount(results.getBigDecimal("amount"));
         try {
