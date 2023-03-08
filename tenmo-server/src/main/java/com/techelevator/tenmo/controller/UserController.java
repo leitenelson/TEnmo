@@ -17,7 +17,7 @@ import java.util.List;
 @PreAuthorize("isAuthenticated()")
 @RequestMapping("users")
 public class UserController {
-
+    @Autowired
     private final UserDao userDao;
 
 
@@ -39,8 +39,9 @@ public class UserController {
     }
 
     //endpoint is /users/account?id="
-    @GetMapping("/account/{id}")
+    @GetMapping(path = "/account/{id}")
     public User findUserByAccountId(@PathVariable int id) {
+
         return userDao.findUserByAccountId(id);
     }
 

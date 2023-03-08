@@ -89,7 +89,7 @@ public class App {
     private void viewCurrentBalance() { //Kendra
         // TODO Auto-generated method stub
         AccountService accountService = new AccountService(API_BASE_URL,currentUser);
-        accountService.getBalance();
+        System.out.println("Your current account balance is: $" + accountService.getBalance());
 
     }
 

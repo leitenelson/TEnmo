@@ -20,11 +20,13 @@ public class TransferService {
     private RestTemplate restTemplate = new RestTemplate();
     private AuthenticatedUser currentUser;
     private Transfer transfer = new Transfer();
-   private Account account = new Account();
+
+    private  AccountService accountService ;
 
     public TransferService(String url, AuthenticatedUser currentUser) {
         this.currentUser = currentUser;
-        BASE_URL = url;
+        this.BASE_URL = url;
+       accountService = new AccountService(url,currentUser);
     }
 
 
@@ -62,27 +64,27 @@ public class TransferService {
         }
     }
     private void printTransfers(Transfer[] transfers){
-        System.out.println("-------------------------------------------\r\n" +
-                "Transfers\r\n" +
-                "ID          From/To                 Amount\r\n" +
-                "-------------------------------------------\r\n");
+        System.out.println("Transfers");
+        System.out.printf("%-12s %-24s %-12s%n", "ID", "From/To", "Amount");
+        System.out.printf("%-12s %-24s %-12s%n", "-----------", "------------------------", "-----------");
+
         String fromTo = "";
         String userName = "";
 
         for (Transfer i : transfers) {
-
-            if (currentUser.getUser().getId()== account.getUserId()) {
-                fromTo = "From: " ;
-                userName = i.getUserTo();
-
-
-            } else {
-                fromTo = "To: ";
-                userName = i.getUserFrom();
+            if (currentUser.getUser().getUsername().equals(i.getUserFrom())) {
+                System.out.printf("%-12s %-24s $%-12.2f%n", currentUser.getUser().getId(), "From: " + i.getUserFrom(), accountService.getBalance());
+                System.out.printf("%-12s %-24s $%-12.2f%n", i.getTransferId(), "To: " + i.getUserTo(), i.getAmount());
             }
-            System.out.println(i.getTransferId() +"\t\t" + fromTo + userName + "\t\t$" + i.getAmount());
-
+            else if((currentUser.getUser().getUsername().equals(i.getUserTo()))){
+                System.out.printf("%-12s %-24s $%-12.2f%n", i.getTransferId(), "From: " + i.getUserFrom(), i.getAmount());
+                System.out.printf("%-12s %-24s $%-12.2f%n", currentUser.getUser().getId(), "To: " + i.getUserTo(), accountService.getBalance());
+            }
         }
+
+
+
+
 
     }
     private void printUsers(User[] users) {

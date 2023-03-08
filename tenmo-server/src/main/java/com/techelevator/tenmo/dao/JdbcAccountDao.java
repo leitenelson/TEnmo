@@ -1,7 +1,6 @@
 package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.Account;
-import com.techelevator.tenmo.model.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,7 +8,6 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.math.BigDecimal;
 
 @Component
@@ -88,18 +86,18 @@ public class JdbcAccountDao implements AccountDao{
     }
 
     @Override
-    public int findUserIdByAccountId(int accountId) {
+    public Integer findUserIdByAccountId(int accountId) {
         String sql = "SELECT user_id from account WHERE account_id = ?";
         SqlRowSet results = null;
-        int number = 0;
+        Integer userId = null;
 
         try {
-            number = jdbcTemplate.queryForObject(sql, int.class,accountId);
+            userId = jdbcTemplate.queryForObject(sql, Integer.class,accountId);
 
         } catch (DataAccessException e) {
             System.out.println("Error accessing data");
         }
-        return number;
+        return userId;
     }
 
     private Account mapRowToAccount(SqlRowSet rs) {
