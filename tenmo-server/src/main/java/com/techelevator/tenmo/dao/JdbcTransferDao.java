@@ -42,25 +42,17 @@ public class JdbcTransferDao implements TransferDao {
     }
 
     @Override
-    public Transfer getTransferById(int id) {
+    public Transfer getTransferById(int transferId) {
         Transfer transfer = null;
-        String sql = "SELECT t.transfer_id, t.amount, tt.transfer_type_desc, ts.transfer_status_desc, \n" +
-                "    af.account_id as account_from_id, af.user_id as account_from_user_id, af.balance as account_from_balance, \n" +
-                "    at.account_id as account_to_id, at.user_id as account_to_user_id, at.balance as account_to_balance \n" +
-                "FROM transfer t \n" +
-                "JOIN transfer_type tt ON t.transfer_type_id = tt.transfer_type_id \n" +
-                "JOIN transfer_status ts ON t.transfer_status_id = ts.transfer_status_id \n" +
-                "JOIN account af ON t.account_from = af.account_id \n" +
-                "JOIN account at ON t.account_to = at.account_id \n" +
-                "WHERE t.transfer_id = ?;\n";
+        String sql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount " +
+                "FROM transfer WHERE transfer_id = ?";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, transferId);
 
 
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
-        if (results.next()) {
-            transfer = mapRowToTransfer(results);
-        } else {
-            throw new AllExceptions();
+        if(result.next()){
+            transfer = mapRowToTransfer(result);
         }
+
         return transfer;
     }
 
@@ -122,14 +114,14 @@ public class JdbcTransferDao implements TransferDao {
         transfer.setAccountFrom(results.getInt("account_from"));
         transfer.setAccountTo(results.getInt("account_to"));
         transfer.setAmount(results.getBigDecimal("amount"));
-        try {
-            transfer.setUserFrom(results.getString("userFrom"));
-            transfer.setUserTo(results.getString("userTo"));
-        } catch (Exception e) {}
-        try {
-            transfer.setTransferType(results.getString("transfer_type_desc"));
-            transfer.setTransferStatus(results.getString("transfer_status_desc"));
-        } catch (Exception e) {}
+//        try {
+//            transfer.setUserFrom(results.getString("userFrom"));
+//            transfer.setUserTo(results.getString("userTo"));
+//        } catch (Exception e) {}
+//        try {
+//            transfer.setTransferType(results.getString("transfer_type_desc"));
+//            transfer.setTransferStatus(results.getString("transfer_status_desc"));
+//        } catch (Exception e) {}
         return transfer;
     }
 }
