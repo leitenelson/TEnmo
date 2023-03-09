@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Main-Class: com.techelevator.tenmo.App
+Class-Path: selenium-chrome-driver-3.141.59.jar datatable-3.3.1.jar sele
+ nium-java-3.141.59.jar jackson-annotations-2.10.3.jar animal-sniffer-an
+ notations-1.14.jar selenium-api-3.141.59.jar j2objc-annotations-1.1.jar
+  jackson-core-2.10.3.jar selenium-edge-driver-3.141.59.jar cucumber-exp
+ ressions-8.3.1.jar cucumber-plugin-5.6.0.jar checker-compat-qual-2.0.0.
+ jar spring-core-5.2.6.RELEASE.jar spring-jcl-5.2.6.RELEASE.jar byte-bud
+ dy-1.8.15.jar okhttp-3.11.0.jar selenium-safari-driver-3.141.59.jar jsr
+ 305-1.3.9.jar selenium-opera-driver-3.141.59.jar error_prone_annotation
+ s-2.1.3.jar spring-tx-5.2.6.RELEASE.jar spring-beans-5.2.6.RELEASE.jar 
+ selenium-remote-driver-3.141.59.jar selenium-ie-driver-3.141.59.jar cuc
+ umber-java-5.6.0.jar guava-25.0-jre.jar selenium-firefox-driver-3.141.5
+ 9.jar cucumber-core-5.6.0.jar jackson-databind-2.10.3.jar apiguardian-a
+ pi-1.1.0.jar docstring-5.6.0.jar spring-jdbc-5.2.6.RELEASE.jar commons-
+ exec-1.3.jar spring-web-5.2.6.RELEASE.jar bcprov-jdk16-1.46.jar cucumbe
+ r-gherkin-vintage-5.6.0.jar tag-expressions-2.0.4.jar selenium-support-
+ 3.141.59.jar cucumber-gherkin-5.6.0.jar okio-1.14.0.jar
+

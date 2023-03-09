@@ -73,19 +73,16 @@ public class TransferService {
 
         for (Transfer i : transfers) {
             if (currentUser.getUser().getUsername().equals(i.getUserFrom())) {
-                System.out.printf("%-12s %-24s $%-12.2f%n", currentUser.getUser().getId(), "From: " + i.getUserFrom(), accountService.getBalance());
                 System.out.printf("%-12s %-24s $%-12.2f%n", i.getTransferId(), "To: " + i.getUserTo(), i.getAmount());
+                //System.out.printf(" %-24s $%-12.2f%n", "To: " + i.getUserTo(), i.getAmount());
             }
             else if((currentUser.getUser().getUsername().equals(i.getUserTo()))){
                 System.out.printf("%-12s %-24s $%-12.2f%n", i.getTransferId(), "From: " + i.getUserFrom(), i.getAmount());
-                System.out.printf("%-12s %-24s $%-12.2f%n", currentUser.getUser().getId(), "To: " + i.getUserTo(), accountService.getBalance());
+                //System.out.printf("%-12s %-24s $%-12.2f%n", currentUser.getUser().getId(), "To: " + i.getUserTo(), accountService.getBalance());
             }
         }
-
-
-
-
-
+        System.out.print("-------------------------------------------\r\n" +
+                "Enter ID of transfer to view details (0 to cancel): ");
     }
     private void printUsers(User[] users) {
         System.out.println("-------------------------------------------\r\n" +
@@ -99,6 +96,14 @@ public class TransferService {
         }
         System.out.print("-------------------------------------------\r\n" +
                 "Enter ID of user you are sending to (0 to cancel): ");
+    }
+
+    private void viewTransferDetail (Transfer transfer) {
+        System.out.println("Id: " + transfer.getTransferId());
+        System.out.println("From: " + transfer.getUserFrom());
+        System.out.println("To: " + transfer.getUserTo());
+        System.out.println("Amount: " + transfer.getAmount());
+
     }
 
     private void moneyTransfer() {
@@ -123,6 +128,16 @@ public class TransferService {
             printTransfers(transfer);
         } catch (RestClientResponseException | ResourceAccessException e) {
             BasicLogger.log(e.getMessage());
+        }
+        Scanner scanner = new Scanner(System.in);
+        int transferId = Integer.parseInt(scanner.nextLine());
+        if (transferId != 0) {
+            for (Transfer i : transfer) {
+                if (i.getTransferId() == transferId){
+                    viewTransferDetail(i);
+                    break;
+                }
+            }
         }
 
     }

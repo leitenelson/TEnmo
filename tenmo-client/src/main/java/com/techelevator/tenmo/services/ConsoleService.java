@@ -3,7 +3,9 @@ package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.model.UserCredentials;
 
+import java.io.*;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -48,7 +50,16 @@ public class ConsoleService {
 
     public UserCredentials promptForCredentials() {
         String username = promptForString("Username: ");
-        String password = promptForString("Password: ");
+        Scanner input = new Scanner(System.in);
+        Console console = System.console();
+        String password = "";
+        if (console == null)  {
+            System.out.print("Password: ");
+            password = input.nextLine();
+        }
+        else {
+            password = new String(console.readPassword("Password: "));
+        }
         return new UserCredentials(username, password);
     }
 
