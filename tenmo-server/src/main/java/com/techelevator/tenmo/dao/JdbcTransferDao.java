@@ -81,7 +81,7 @@ public class JdbcTransferDao implements TransferDao {
             accountDao.subtractFromBalance(amount, userFrom);
             return "Transfer complete";
         } else {
-            return "Transfer failed due to a lack of funds or amount was less then or equal to 0 or not a valid user";
+            return "Transfer invalid";
         }
 
 
