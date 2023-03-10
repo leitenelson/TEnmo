@@ -23,6 +23,7 @@ public class JdbcUserDao implements UserDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // Finds user ID by username.
     @Override
     public int findIdByUsername(String username) {
         if (username == null) throw new IllegalArgumentException("Username cannot be null");
@@ -37,6 +38,7 @@ public class JdbcUserDao implements UserDao {
         return userId;
     }
 
+    // Gets username by user ID.
     @Override
     public User getUserById(int userId) {
         String sql = "SELECT user_id, username, password_hash FROM tenmo_user WHERE user_id = ?";
@@ -48,6 +50,7 @@ public class JdbcUserDao implements UserDao {
         }
     }
 
+    // Lists all users.
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
@@ -62,6 +65,7 @@ public class JdbcUserDao implements UserDao {
         return users;
     }
 
+    // Finds the user by the username and returns the user object.
     @Override
     public User findByUsername(String username) {
         if (username == null) throw new IllegalArgumentException("Username cannot be null");

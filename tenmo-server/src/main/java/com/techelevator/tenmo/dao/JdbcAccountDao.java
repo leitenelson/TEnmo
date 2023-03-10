@@ -19,6 +19,8 @@ public class JdbcAccountDao implements AccountDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    // Finding the account by user ID, and returning account.
     @Override
     public Account findAccountByUserId(int userId) {
         String sql = "SELECT account_id, user_id, balance FROM account WHERE user_id = ?";
@@ -30,6 +32,7 @@ public class JdbcAccountDao implements AccountDao{
         }
     }
 
+    // Finding account ID by the user ID and returning account ID.
     @Override
     public int findAccountIdByUserId(int userId) {
         int accountId;
@@ -41,6 +44,7 @@ public class JdbcAccountDao implements AccountDao{
         return accountId;
     }
 
+    // Adding funds to account and updating balance using user ID.
     @Override
     public BigDecimal addToBalance(BigDecimal addAmount, int id) {
         Account account = findAccountByUserId(id);
@@ -55,6 +59,7 @@ public class JdbcAccountDao implements AccountDao{
         return account.getBalance();
     }
 
+    // Removing funds from account and updating balance using user ID.
     @Override
     public BigDecimal subtractFromBalance(BigDecimal subtractAmount, int id) {
         Account account = findAccountByUserId(id);
@@ -69,6 +74,7 @@ public class JdbcAccountDao implements AccountDao{
         return account.getBalance();
     }
 
+    // Getting account balance using the user ID.
     @Override
     public BigDecimal getBalance(int userId) {
         String sqlString = "SELECT balance FROM account WHERE user_id = ?";
@@ -85,6 +91,7 @@ public class JdbcAccountDao implements AccountDao{
         return balance;
     }
 
+    // Finding the user ID by using the account ID.
     @Override
     public Integer findUserIdByAccountId(int accountId) {
         String sql = "SELECT user_id from account WHERE account_id = ?";

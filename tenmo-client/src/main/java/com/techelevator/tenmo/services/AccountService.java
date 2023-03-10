@@ -24,10 +24,10 @@ public class AccountService {
         BASE_URL = url;
     }
 
+    // Method for viewing balance.
     public BigDecimal getBalance() {
         BigDecimal balance2 = new BigDecimal(0);
         try {
-            //+ currentUser.getUser().getId()
             ResponseEntity<BigDecimal> balance = restTemplate.exchange(BASE_URL + "account/balance", HttpMethod.GET, makeAuthEntity(), BigDecimal.class);
             balance2 = balance.getBody();
         } catch (RestClientException e) {
@@ -36,44 +36,6 @@ public class AccountService {
         return balance2;
     }
 
-    public Integer getUserIdByAccountId( int accountId) {
-
-
-        Integer number =0;
-        try {
-           number = restTemplate.exchange(BASE_URL + "account/" + accountId,
-                    HttpMethod.GET,
-                    makeAuthEntity(),
-                    Integer.class).getBody();
-
-
-        } catch(RestClientResponseException e) {
-            System.out.println("Could not complete request. Code: " + e.getRawStatusCode());
-        } catch(ResourceAccessException e) {
-            System.out.println("Could not complete request due to server network issue. Please try again.");
-        }
-
-        return number;
-    }
-    public User getUserByAccountId(int accountId){
-        User user = null;
-        try {
-          user =  restTemplate.exchange(
-                    BASE_URL+ "users/account/" + accountId,
-                    HttpMethod.GET,
-                    makeAuthEntity(),
-                    User.class).getBody();
-
-
-        } catch(RestClientResponseException e) {
-            System.out.println("Could not complete request. Code: " + e.getRawStatusCode());
-        } catch(ResourceAccessException e) {
-            System.out.println("Could not complete request due to server network issue. Please try again.");
-        }
-
-        return user;
-
-    }
     private HttpEntity makeAuthEntity() {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(currentUser.getToken());

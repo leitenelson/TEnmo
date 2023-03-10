@@ -48,6 +48,8 @@ public class ConsoleService {
         System.out.println();
     }
 
+    // Method for optimized user interface when using the app outside IDE.
+
     public UserCredentials promptForCredentials() {
         String username = promptForString("Username: ");
         Scanner input = new Scanner(System.in);

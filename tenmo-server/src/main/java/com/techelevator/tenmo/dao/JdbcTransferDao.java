@@ -24,6 +24,7 @@ public class JdbcTransferDao implements TransferDao {
 
 
 
+    // Lists all transfers in account by user ID.
     @Override
     public List<Transfer> getAllTransfers(int id) {
         List<Transfer> list = new ArrayList<>();
@@ -42,6 +43,7 @@ public class JdbcTransferDao implements TransferDao {
         return list;
     }
 
+    // Getting transfer history by transfer ID.
     @Override
     public Transfer getTransferById(int transferId) {
         Transfer transfer = null;
@@ -57,6 +59,7 @@ public class JdbcTransferDao implements TransferDao {
         return transfer;
     }
 
+    // Method for updating funds sent to an account using user ID.
     @Override
     public String sendTransfer(int userFrom, int userTo, BigDecimal amount) {
         if ( userFrom == userTo) {
@@ -81,6 +84,7 @@ public class JdbcTransferDao implements TransferDao {
 
     }
 
+
     @Override
     public String requestTransfer(int idFrom, int idTo, BigDecimal amount) {
         if ( idFrom == idTo) {
@@ -97,11 +101,13 @@ public class JdbcTransferDao implements TransferDao {
         }
     }
 
+    // Code is not being used as this is part of the optional items.
     @Override
     public List<Transfer> getPendingRequests(int userId) {
         return null;
     }
 
+    // Code is not being used as this is part of the optional items.
     @Override
     public String updateTransferRequest(Transfer transfer, int statusId) {
         return null;

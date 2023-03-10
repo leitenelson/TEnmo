@@ -28,6 +28,7 @@ public class App {
             mainMenu();
         }
     }
+
     private void loginMenu() {
         int menuSelection = -1;
         while (menuSelection != 0 && currentUser == null) {
@@ -71,12 +72,12 @@ public class App {
                 viewCurrentBalance();
             } else if (menuSelection == 2) {
                 viewTransferHistory();
+//            } else if (menuSelection == 3) {
+//               viewPendingRequests();
             } else if (menuSelection == 3) {
-     //           viewPendingRequests();
-            } else if (menuSelection == 4) {
                 sendBucks();
-            } else if (menuSelection == 5) {
-                requestBucks();
+//            } else if (menuSelection == 5) {
+//                requestBucks();
             } else if (menuSelection == 0) {
                 continue;
             } else {
@@ -86,32 +87,22 @@ public class App {
         }
     }
 
-    private void viewCurrentBalance() { //Kendra
-        // TODO Auto-generated method stub
-        AccountService accountService = new AccountService(API_BASE_URL,currentUser);
+    private void viewCurrentBalance() {
+        AccountService accountService = new AccountService(API_BASE_URL, currentUser);
         System.out.println("Your current account balance is: $" + accountService.getBalance());
 
     }
 
-    private void viewTransferHistory() { //Kendra
-        TransferService transferService = new TransferService(API_BASE_URL,currentUser);
+    private void viewTransferHistory() {
+        TransferService transferService = new TransferService(API_BASE_URL, currentUser);
         transferService.transferHistory();
-        }
+    }
 
-//	private void viewPendingRequests() { //Kendra
-//        TransferService transferService = new TransferService(API_BASE_URL,currentUser);
-//        transferService.pendingRequest();
-		
-//	}
 
     private void sendBucks() {
         TransferService ts = new TransferService(API_BASE_URL, currentUser);
         ts.sendBucks();
     }
-
-    private void requestBucks() {
-        TransferService ts = new TransferService(API_BASE_URL, currentUser);
-        ts.requestBucks();
-    }
-
 }
+
+
