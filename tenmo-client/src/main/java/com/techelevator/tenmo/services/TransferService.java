@@ -79,6 +79,8 @@ public class TransferService {
             else if((currentUser.getUser().getUsername().equals(i.getUserTo()))){
                 System.out.printf("%-12s %-24s $%-12.2f%n", i.getTransferId(), "From: " + i.getUserFrom(), i.getAmount());
                 //System.out.printf("%-12s %-24s $%-12.2f%n", currentUser.getUser().getId(), "To: " + i.getUserTo(), accountService.getBalance());
+            } else {
+                System.out.println("null");
             }
         }
         System.out.print("-------------------------------------------\r\n" +

@@ -12,6 +12,7 @@ import java.util.List;
 import java.math.BigDecimal;
 @Component
 public class JdbcTransferDao implements TransferDao {
+    @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private AccountDao accountDao;
@@ -114,14 +115,14 @@ public class JdbcTransferDao implements TransferDao {
         transfer.setAccountFrom(results.getInt("account_from"));
         transfer.setAccountTo(results.getInt("account_to"));
         transfer.setAmount(results.getBigDecimal("amount"));
-//        try {
-//            transfer.setUserFrom(results.getString("userFrom"));
-//            transfer.setUserTo(results.getString("userTo"));
-//        } catch (Exception e) {}
-//        try {
-//            transfer.setTransferType(results.getString("transfer_type_desc"));
-//            transfer.setTransferStatus(results.getString("transfer_status_desc"));
-//        } catch (Exception e) {}
+        try {
+            transfer.setUserFrom(results.getString("userFrom"));
+            transfer.setUserTo(results.getString("userTo"));
+        } catch (Exception e) {}
+        try {
+            transfer.setTransferType(results.getString("transfer_type_desc"));
+            transfer.setTransferStatus(results.getString("transfer_status_desc"));
+        } catch (Exception e) {}
         return transfer;
     }
 }
